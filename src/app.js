@@ -1,4 +1,5 @@
 const express = require("express");
+require("express-async-erros");
 
 require("./config/db");
 
@@ -7,6 +8,11 @@ const router = require("./routes");
 
 app.use(express.json());
 app.use(router);
+
+app.use((err, req, res, next) => {
+   console.log(err);
+   res.status(500).send({ error: "Ocorreu um erro!" });
+});
 
 app.get("/", (req, res) => {
    res.send({ message: "Seja bem vindo(a) a API Classic Models" });
